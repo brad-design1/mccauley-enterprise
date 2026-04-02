@@ -5,29 +5,33 @@
 <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header">
   <div class="w-full px-6 md:px-12 lg:px-24 py-5 flex items-center justify-between">
     <!-- Logo -->
-    <a href="/" class="text-white font-bold text-2xl tracking-tight z-50 relative">
+    <a href="/" class="text-white font-bold text-2xl tracking-tight z-[60] relative" id="logo">
       McCauley<span class="text-gold">.</span>
     </a>
     
     <!-- Menu Button -->
     <button 
-      class="z-50 relative flex items-center gap-2 text-white font-medium tracking-wider text-sm group"
+      class="z-[60] relative flex items-center gap-2 text-white font-medium tracking-wider text-sm group"
       id="menuToggle"
       aria-label="Toggle menu"
     >
-      <span class="menu-text">MENU</span>
-      <div class="w-8 h-5 flex flex-col justify-between">
-        <span class="menu-line w-full h-0.5 bg-white transition-all duration-300 origin-center"></span>
-        <span class="menu-line w-full h-0.5 bg-white transition-all duration-300 origin-center"></span>
-        <span class="menu-line w-full h-0.5 bg-white transition-all duration-300 origin-center"></span>
+      <span class="menu-text transition-opacity duration-300" id="menuText">MENU</span>
+      <div class="w-8 h-5 flex flex-col justify-between relative">
+        <span class="menu-line absolute top-0 w-full h-0.5 bg-white transition-all duration-300 origin-center" id="line1"></span>
+        <span class="menu-line absolute top-1/2 -translate-y-1/2 w-full h-0.5 bg-white transition-all duration-300 origin-center" id="line2"></span>
+        <span class="menu-line absolute bottom-0 w-full h-0.5 bg-white transition-all duration-300 origin-center" id="line3"></span>
       </div>
     </button>
   </div>
 </header>
 
 <!-- Full-screen menu overlay -->
-<div class="menu-overlay fixed inset-0 z-40 bg-gold transform translate-y-full transition-transform duration-500 ease-out" id="menuOverlay">
-  <div class="w-full h-full px-6 md:px-12 lg:px-24 py-24 flex flex-col justify-between">
+<div 
+  class="fixed inset-0 z-[55] bg-gold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" 
+  id="menuOverlay"
+  style="transform: translateY(100%);"
+>
+  <div class="w-full h-full px-6 md:px-12 lg:px-24 py-24 flex flex-col justify-between overflow-auto">
     <!-- Navigation Links -->
     <nav class="flex-1 flex flex-col justify-center">
       <ul class="space-y-2 md:space-y-4">
@@ -68,27 +72,6 @@
 </div>
 
 <style>
-  /* Menu open state */
-  .menu-open .menu-overlay {
-    transform: translateY(0);
-  }
-  
-  .menu-open .menu-text {
-    opacity: 0;
-  }
-  
-  .menu-open .menu-line:nth-child(1) {
-    transform: rotate(45deg) translateY(8px);
-  }
-  
-  .menu-open .menu-line:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .menu-open .menu-line:nth-child(3) {
-    transform: rotate(-45deg) translateY(-8px);
-  }
-  
   /* Header scrolled state */
   .header-scrolled {
     background: rgba(26, 26, 26, 0.95);
@@ -118,36 +101,87 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.getElementById('menuToggle');
-    const menuOverlay = document.getElementById('menuOverlay');
-    const header = document.getElementById('header');
-    const navLinks = document.querySelectorAll('.nav-link');
+  const menuToggle = document.getElementById('menuToggle');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuText = document.getElementById('menuText');
+  const line1 = document.getElementById('line1');
+  const line2 = document.getElementById('line2');
+  const line3 = document.getElementById('line3');
+  const logo = document.getElementById('logo');
+  const header = document.getElementById('header');
+  const navLinks = document.querySelectorAll('.nav-link');
+  
+  let menuOpen = false;
+  
+  function openMenu() {
+    menuOpen = true;
+    menuOverlay.style.transform = 'translateY(0)';
+    document.body.style.overflow = 'hidden';
     
-    // Toggle menu
-    menuToggle?.addEventListener('click', () => {
-      document.body.classList.toggle('menu-open');
-      document.body.style.overflow = document.body.classList.contains('menu-open') ? 'hidden' : '';
-    });
+    // Animate hamburger to X
+    line1.style.transform = 'rotate(45deg) translateY(10px)';
+    line2.style.opacity = '0';
+    line3.style.transform = 'rotate(-45deg) translateY(-10px)';
+    menuText.style.opacity = '0';
     
-    // Close menu when clicking a link
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        document.body.classList.remove('menu-open');
-        document.body.style.overflow = '';
-      });
-    });
+    // Change colors for visibility on gold
+    logo.classList.remove('text-white');
+    logo.classList.add('text-charcoal');
+    line1.classList.remove('bg-white');
+    line1.classList.add('bg-charcoal');
+    line2.classList.remove('bg-white');
+    line2.classList.add('bg-charcoal');
+    line3.classList.remove('bg-white');
+    line3.classList.add('bg-charcoal');
+  }
+  
+  function closeMenu() {
+    menuOpen = false;
+    menuOverlay.style.transform = 'translateY(100%)';
+    document.body.style.overflow = '';
     
-    // Header scroll state
-    function updateHeader() {
-      if (window.scrollY > 100) {
-        header?.classList.add('header-scrolled');
-      } else {
-        header?.classList.remove('header-scrolled');
-      }
+    // Animate X back to hamburger
+    line1.style.transform = '';
+    line2.style.opacity = '1';
+    line3.style.transform = '';
+    menuText.style.opacity = '1';
+    
+    // Restore colors
+    logo.classList.add('text-white');
+    logo.classList.remove('text-charcoal');
+    line1.classList.add('bg-white');
+    line1.classList.remove('bg-charcoal');
+    line2.classList.add('bg-white');
+    line2.classList.remove('bg-charcoal');
+    line3.classList.add('bg-white');
+    line3.classList.remove('bg-charcoal');
+  }
+  
+  // Toggle menu
+  menuToggle?.addEventListener('click', () => {
+    if (menuOpen) {
+      closeMenu();
+    } else {
+      openMenu();
     }
-    
-    window.addEventListener('scroll', updateHeader);
-    updateHeader();
   });
+  
+  // Close menu when clicking a link
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+  
+  // Header scroll state
+  function updateHeader() {
+    if (window.scrollY > 100 && !menuOpen) {
+      header?.classList.add('header-scrolled');
+    } else {
+      header?.classList.remove('header-scrolled');
+    }
+  }
+  
+  window.addEventListener('scroll', updateHeader);
+  updateHeader();
 </script>
