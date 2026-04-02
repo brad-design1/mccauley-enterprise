@@ -1,22 +1,29 @@
 ---
-// Hero section - full bleed with Shed-inspired touches
+// Hero section - full bleed with Shed-inspired background swap
 const projectPreviews = [
-  '/images/portfolio-1.png',
-  '/images/portfolio-2.png',
-  '/images/portfolio-3.png',
-  '/images/portfolio-4.png',
+  { thumb: '/images/portfolio-1.png', hero: '/images/accent-architecture.png' },
+  { thumb: '/images/portfolio-2.png', hero: '/images/portfolio-2.png' },
+  { thumb: '/images/portfolio-3.png', hero: '/images/portfolio-3.png' },
+  { thumb: '/images/portfolio-4.png', hero: '/images/accent-transformation.png' },
 ]
 ---
 
 <section class="relative min-h-screen flex items-center overflow-hidden">
-  <!-- Background Image - FULL BLEED with parallax -->
+  <!-- Background Images - stacked for crossfade -->
   <div class="absolute inset-0 z-0">
-    <img 
-      src="/images/accent-architecture.png" 
-      alt="McCauley Enterprise construction" 
-      class="w-full h-full object-cover parallax-slow scale-110"
-    />
-    <div class="absolute inset-0 bg-gradient-to-r from-charcoal/95 via-charcoal/70 to-charcoal/30"></div>
+    {projectPreviews.map((project, index) => (
+      <div 
+        class={`hero-bg absolute inset-0 transition-opacity duration-700 ease-out ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+        data-bg-index={index}
+      >
+        <img 
+          src={project.hero} 
+          alt={`Project ${index + 1}`}
+          class="w-full h-full object-cover scale-110"
+        />
+      </div>
+    ))}
+    <div class="absolute inset-0 bg-gradient-to-r from-charcoal/95 via-charcoal/70 to-charcoal/30 z-10"></div>
   </div>
   
   <!-- Content -->
@@ -46,15 +53,15 @@ const projectPreviews = [
     </div>
   </div>
   
-  <!-- SHED-INSPIRED: Project preview oval (bottom left) -->
+  <!-- SHED-INSPIRED: Project preview oval (bottom left) - now controls hero bg -->
   <div class="absolute bottom-8 left-6 md:left-12 lg:left-24 z-20 reveal" style="transition-delay: 1s">
     <div class="project-preview-pill group cursor-pointer" id="projectPreview">
       <div class="relative w-[180px] h-[100px] md:w-[220px] md:h-[120px] rounded-full overflow-hidden border-2 border-white/30 hover:border-gold transition-colors duration-300">
         <!-- Image carousel -->
         <div class="preview-carousel absolute inset-0 flex transition-transform duration-500" id="previewCarousel">
-          {projectPreviews.map((img, index) => (
+          {projectPreviews.map((project, index) => (
             <img 
-              src={img} 
+              src={project.thumb} 
               alt={`Project ${index + 1}`}
               class="w-full h-full object-cover flex-shrink-0"
             />
@@ -125,19 +132,35 @@ const projectPreviews = [
 </style>
 
 <script>
-  // Project preview carousel auto-rotation
+  // Project preview carousel + hero background swap
   document.addEventListener('DOMContentLoaded', () => {
     const carousel = document.getElementById('previewCarousel');
     const countEl = document.getElementById('previewCount');
     const dots = document.querySelectorAll('.preview-dot');
+    const heroBgs = document.querySelectorAll('.hero-bg');
     let currentIndex = 0;
     const total = 4;
+    let autoRotateInterval: ReturnType<typeof setInterval>;
     
-    function updateCarousel(index) {
+    function updateCarousel(index: number) {
       currentIndex = index;
-      carousel.style.transform = `translateX(-${index * 100}%)`;
-      countEl.textContent = String(index + 1).padStart(2, '0');
       
+      // Update preview carousel
+      carousel!.style.transform = `translateX(-${index * 100}%)`;
+      countEl!.textContent = String(index + 1).padStart(2, '0');
+      
+      // Update hero background with crossfade
+      heroBgs.forEach((bg, i) => {
+        if (i === index) {
+          bg.classList.remove('opacity-0');
+          bg.classList.add('opacity-100');
+        } else {
+          bg.classList.remove('opacity-100');
+          bg.classList.add('opacity-0');
+        }
+      });
+      
+      // Update dots
       dots.forEach((dot, i) => {
         if (i === index) {
           dot.classList.add('bg-gold', 'w-4');
@@ -149,17 +172,32 @@ const projectPreviews = [
       });
     }
     
-    // Auto-rotate every 3 seconds
-    setInterval(() => {
-      updateCarousel((currentIndex + 1) % total);
-    }, 3000);
+    function startAutoRotate() {
+      autoRotateInterval = setInterval(() => {
+        updateCarousel((currentIndex + 1) % total);
+      }, 4000);
+    }
+    
+    function stopAutoRotate() {
+      clearInterval(autoRotateInterval);
+    }
+    
+    // Start auto-rotate
+    startAutoRotate();
+    
+    // Pause on hover
+    document.getElementById('projectPreview')?.addEventListener('mouseenter', stopAutoRotate);
+    document.getElementById('projectPreview')?.addEventListener('mouseleave', startAutoRotate);
     
     // Click dots to navigate
     dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => updateCarousel(index));
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateCarousel(index);
+      });
     });
     
-    // Click pill to go to portfolio
+    // Click pill to go to portfolio (but not when clicking dots)
     document.getElementById('projectPreview')?.addEventListener('click', (e) => {
       if (!(e.target as Element).closest('.preview-dot')) {
         document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
