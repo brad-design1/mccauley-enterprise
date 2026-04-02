@@ -1,5 +1,5 @@
 ---
-// Services section - FULL WIDTH cards with real images
+// Services section with staggered reveal
 const services = [
   {
     title: 'Remodel',
@@ -19,41 +19,41 @@ const services = [
 ]
 ---
 
-<section id="services" class="py-24 md:py-32 bg-warm-white">
+<section id="services" class="py-24 md:py-32 bg-warm-white section-divider">
   <div class="w-full px-6 md:px-12 lg:px-24">
     <!-- Header -->
     <div class="mb-16">
-      <p class="text-gold font-medium mb-4 tracking-wider text-sm uppercase">Services</p>
-      <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold text-charcoal">
+      <p class="text-gold font-medium mb-4 tracking-wider text-sm uppercase reveal">Services</p>
+      <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold text-charcoal reveal-up" style="transition-delay: 0.1s">
         How McCauley<br/>
         Can Help You
       </h2>
     </div>
     
-    <!-- Service Cards - FULL WIDTH GRID with images -->
+    <!-- Service Cards with staggered animation -->
     <div class="grid md:grid-cols-3 gap-6 lg:gap-8 mb-16">
-      {services.map(service => (
-        <div class="group relative overflow-hidden rounded-lg cursor-pointer min-h-[450px]">
+      {services.map((service, index) => (
+        <div class={`group relative overflow-hidden rounded-lg cursor-pointer min-h-[450px] reveal-scale stagger-${index + 1}`}>
           <!-- Background Image -->
           <img 
             src={service.image} 
             alt={service.title}
-            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
           />
           <!-- Overlay -->
-          <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-transparent transition-all duration-500 group-hover:from-navy group-hover:via-navy/70"></div>
           
           <!-- Content -->
           <div class="absolute inset-0 flex flex-col justify-end p-8 lg:p-10">
-            <h3 class="text-3xl font-bold mb-4 text-white">
+            <h3 class="text-3xl font-bold mb-4 text-white transition-transform duration-300 group-hover:-translate-y-2">
               {service.title}
             </h3>
-            <p class="text-white/80 leading-relaxed text-lg">
+            <p class="text-white/80 leading-relaxed text-lg transition-all duration-300 group-hover:text-white">
               {service.description}
             </p>
-            <div class="mt-6 flex items-center gap-2 text-gold font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+            <div class="mt-6 flex items-center gap-2 text-gold font-medium opacity-0 translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
               Learn More
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </div>
@@ -62,14 +62,14 @@ const services = [
       ))}
     </div>
     
-    <!-- Bottom CTA - FULL WIDTH -->
-    <div class="bg-cream rounded-lg p-10 lg:p-16">
+    <!-- Bottom CTA -->
+    <div class="bg-cream rounded-lg p-10 lg:p-16 reveal-up">
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
         <p class="text-xl md:text-2xl text-gray-mid max-w-2xl leading-relaxed">
           Our craftsmen guide you through every stage of your project with expert 
           knowledge and reliable support.
         </p>
-        <a href="#contact" class="btn-primary whitespace-nowrap text-lg">
+        <a href="#contact" class="btn-primary whitespace-nowrap text-lg magnetic">
           Get Started with McCauley
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />

@@ -1,0 +1,158 @@
+---
+// Client-side scroll animations script
+---
+
+<script>
+  // Wait for DOM
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    // ============================================
+    // SCROLL REVEAL OBSERVER
+    // ============================================
+    const revealElements = document.querySelectorAll('.reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-scale, .clip-reveal');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    revealElements.forEach(el => revealObserver.observe(el));
+    
+    // ============================================
+    // PARALLAX ON SCROLL
+    // ============================================
+    const parallaxElements = document.querySelectorAll('.parallax-slow, .parallax-fast');
+    
+    let ticking = false;
+    
+    function updateParallax() {
+      const scrollY = window.scrollY;
+      
+      parallaxElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const speed = el.classList.contains('parallax-fast') ? 0.15 : 0.05;
+        const yPos = (rect.top + scrollY) * speed;
+        
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.style.transform = `translateY(${-yPos}px)`;
+        }
+      });
+      
+      ticking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    });
+    
+    // ============================================
+    // HEADER SCROLL STATE
+    // ============================================
+    const header = document.querySelector('header');
+    
+    function updateHeader() {
+      if (window.scrollY > 100) {
+        header?.classList.add('header-scrolled');
+      } else {
+        header?.classList.remove('header-scrolled');
+      }
+    }
+    
+    window.addEventListener('scroll', updateHeader);
+    updateHeader();
+    
+    // ============================================
+    // SMOOTH ANCHOR SCROLLING
+    // ============================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    
+    // ============================================
+    // NUMBER COUNTER ANIMATION
+    // ============================================
+    const counters = document.querySelectorAll('.counter');
+    
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target;
+          const finalValue = target.getAttribute('data-value');
+          const suffix = target.getAttribute('data-suffix') || '';
+          const duration = 2000;
+          const startTime = performance.now();
+          
+          function animate(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            
+            const current = Math.floor(eased * parseFloat(finalValue));
+            target.textContent = current + suffix;
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              target.textContent = finalValue + suffix;
+            }
+          }
+          
+          requestAnimationFrame(animate);
+          counterObserver.unobserve(target);
+        }
+      });
+    }, { threshold: 0.5 });
+    
+    counters.forEach(counter => counterObserver.observe(counter));
+    
+    // ============================================
+    // MAGNETIC BUTTON EFFECT
+    // ============================================
+    const magneticButtons = document.querySelectorAll('.magnetic');
+    
+    magneticButtons.forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+      });
+      
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0)';
+      });
+    });
+    
+    // ============================================
+    // PAGE LOADER
+    // ============================================
+    const loader = document.querySelector('.page-loader');
+    if (loader) {
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          loader.classList.add('hidden');
+        }, 500);
+      });
+    }
+    
+  });
+</script>

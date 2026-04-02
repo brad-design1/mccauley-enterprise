@@ -1,5 +1,5 @@
 ---
-// Testimonials section - FULL WIDTH
+// Testimonials with staggered reveal
 const testimonials = [
   {
     quote: "McCauley transformed our 1970s kitchen into something out of a magazine. They were professional, clean, and actually finished ahead of schedule. We have recommended them to everyone we know.",
@@ -19,35 +19,38 @@ const testimonials = [
 ]
 ---
 
-<section class="py-24 md:py-32 bg-warm-white">
+<section class="py-24 md:py-32 bg-warm-white section-divider overflow-hidden">
   <div class="w-full px-6 md:px-12 lg:px-24">
     <!-- Header -->
     <div class="mb-16">
-      <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold text-charcoal">
+      <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold text-charcoal reveal-up">
         Do Not Take Our Word for It.
       </h2>
     </div>
     
-    <!-- Testimonial Cards - FULL WIDTH -->
+    <!-- Testimonial Cards with stagger -->
     <div class="grid lg:grid-cols-3 gap-8">
-      {testimonials.map(testimonial => (
-        <div class="bg-cream p-10 lg:p-12 rounded-lg flex flex-col">
-          <p class="text-gray-mid leading-relaxed text-xl flex-1 mb-8">
-            "{testimonial.quote}"
+      {testimonials.map((testimonial, index) => (
+        <div class={`bg-cream p-10 lg:p-12 rounded-lg flex flex-col group hover:bg-navy transition-all duration-500 reveal-up stagger-${index + 1}`}>
+          <div class="text-6xl text-gold/30 mb-4 group-hover:text-gold/50 transition-colors">"</div>
+          <p class="text-gray-mid leading-relaxed text-xl flex-1 mb-8 group-hover:text-white/80 transition-colors">
+            {testimonial.quote}
           </p>
-          <div class="border-t border-gray-light pt-6">
-            <p class="font-bold text-charcoal text-lg">{testimonial.name}</p>
-            <p class="text-gray-mid">{testimonial.location}</p>
+          <div class="border-t border-gray-light group-hover:border-white/20 pt-6 transition-colors">
+            <p class="font-bold text-charcoal text-lg group-hover:text-white transition-colors">{testimonial.name}</p>
+            <p class="text-gray-mid group-hover:text-white/60 transition-colors">{testimonial.location}</p>
           </div>
         </div>
       ))}
     </div>
     
     <!-- Trust indicators -->
-    <div class="mt-20 pt-12 border-t border-gray-light">
+    <div class="mt-20 pt-12 border-t border-gray-light reveal-up" style="transition-delay: 0.5s">
       <p class="text-gray-mid mb-8 text-lg">Trusted by homeowners across Chicagoland since 1978</p>
       <div class="flex flex-wrap gap-8 lg:gap-16">
-        <div class="text-charcoal font-medium">Google Reviews: 4.9 ★</div>
+        <div class="text-charcoal font-medium flex items-center gap-2">
+          <span class="text-gold text-xl">★</span> Google Reviews: 4.9
+        </div>
         <div class="text-charcoal font-medium">BBB Accredited</div>
         <div class="text-charcoal font-medium">Licensed & Insured</div>
         <div class="text-charcoal font-medium">45+ Years Experience</div>

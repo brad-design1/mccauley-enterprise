@@ -1,14 +1,14 @@
 ---
-// "Why McCauley" section - FULL WIDTH
+// "Why McCauley" section with animations
 ---
 
-<section class="py-24 md:py-32 bg-warm-white">
+<section class="py-24 md:py-32 bg-warm-white section-divider">
   <div class="w-full px-6 md:px-12 lg:px-24">
     <div class="max-w-5xl">
-      <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal mb-8">
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal mb-8 reveal-up">
         Why McCauley
       </h2>
-      <p class="text-2xl md:text-3xl text-gray-mid leading-relaxed">
+      <p class="text-2xl md:text-3xl text-gray-mid leading-relaxed reveal-up" style="transition-delay: 0.2s">
         Your home is changing. Do not just find a contractor — find a partner. 
         We help you move forward with clarity, confidence, and craftsmen who have 
         been doing this since 1978.
@@ -17,17 +17,28 @@
   </div>
 </section>
 
-<section class="py-24 md:py-32 bg-cream">
+<section class="py-24 md:py-32 bg-cream overflow-hidden">
   <div class="w-full px-6 md:px-12 lg:px-24">
-    <div class="max-w-5xl">
-      <h2 class="text-4xl md:text-6xl lg:text-7xl font-bold text-charcoal mb-8">
-        This is not just about remodeling.
-      </h2>
-      <p class="text-xl md:text-2xl text-gray-mid leading-relaxed max-w-3xl">
-        It is about how you live. It is about making your space work for your family. 
-        You are not just looking for cabinets and countertops. You are looking for a 
-        home that fits who you have become. That is what we help you build.
-      </p>
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="max-w-xl">
+        <h2 class="text-4xl md:text-6xl lg:text-7xl font-bold text-charcoal mb-8 reveal-left">
+          This is not just about remodeling.
+        </h2>
+        <p class="text-xl md:text-2xl text-gray-mid leading-relaxed reveal-left" style="transition-delay: 0.2s">
+          It is about how you live. It is about making your space work for your family. 
+          You are not just looking for cabinets and countertops. You are looking for a 
+          home that fits who you have become. That is what we help you build.
+        </p>
+      </div>
+      
+      <!-- Accent image -->
+      <div class="reveal-right img-zoom rounded-lg overflow-hidden">
+        <img 
+          src="/images/accent-transformation.png" 
+          alt="Home transformation" 
+          class="w-full"
+        />
+      </div>
     </div>
   </div>
 </section>

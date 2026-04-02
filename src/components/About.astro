@@ -1,11 +1,11 @@
 ---
-// About section - FULL BLEED image + content
+// About section with animated counters and reveal
 ---
 
-<section id="about" class="bg-navy text-white">
+<section id="about" class="bg-navy text-white overflow-hidden">
   <div class="grid lg:grid-cols-2">
-    <!-- Left: Image - FULL BLEED -->
-    <div class="relative min-h-[400px] lg:min-h-[700px]">
+    <!-- Left: Image with clip reveal -->
+    <div class="relative min-h-[400px] lg:min-h-[700px] clip-reveal">
       <img 
         src="/images/about-team.png" 
         alt="McCauley Enterprise team" 
@@ -16,40 +16,47 @@
     <!-- Right: Content -->
     <div class="py-16 lg:py-24 px-6 md:px-12 lg:px-16 xl:px-24 flex items-center">
       <div>
-        <p class="text-gold font-medium mb-4 tracking-wider text-sm uppercase">About Us</p>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8">
+        <p class="text-gold font-medium mb-4 tracking-wider text-sm uppercase reveal">About Us</p>
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 reveal-up" style="transition-delay: 0.1s">
           Three Generations.<br/>
           One Standard.
         </h2>
         <div class="space-y-6 text-white/70 leading-relaxed text-lg max-w-xl">
-          <p>
+          <p class="reveal-up" style="transition-delay: 0.2s">
             McCauley Enterprise was founded in 1978 in Chicago's southwest suburbs with a 
             simple belief: treat every home like it is your own.
           </p>
-          <p>
+          <p class="reveal-up" style="transition-delay: 0.3s">
             In 2017, the third generation took the reins, bringing fresh energy while 
             preserving the craftsmanship and integrity that built our reputation. 
             We have grown from a small family operation to a full-service remodeling and 
             construction company — but we have never lost sight of why families trust us.
           </p>
-          <p>
+          <p class="reveal-up" style="transition-delay: 0.4s">
             From minor repairs to complete home transformations to commercial build-outs, 
             we bring the same attention to detail and commitment to excellence. 
             Because at the end of the day, our name is on every project.
           </p>
         </div>
         
-        <div class="grid grid-cols-3 gap-8 mt-12 pt-12 border-t border-white/20">
+        <!-- Animated counters -->
+        <div class="grid grid-cols-3 gap-8 mt-12 pt-12 border-t border-white/20 reveal-up" style="transition-delay: 0.5s">
           <div>
-            <p class="text-4xl lg:text-5xl font-bold text-gold">45+</p>
+            <p class="text-4xl lg:text-5xl font-bold text-gold">
+              <span class="counter" data-value="45" data-suffix="+">0</span>
+            </p>
             <p class="text-white/50 text-sm mt-2">Years in Business</p>
           </div>
           <div>
-            <p class="text-4xl lg:text-5xl font-bold text-gold">3rd</p>
+            <p class="text-4xl lg:text-5xl font-bold text-gold">
+              <span class="counter" data-value="3" data-suffix="rd">0</span>
+            </p>
             <p class="text-white/50 text-sm mt-2">Generation</p>
           </div>
           <div>
-            <p class="text-4xl lg:text-5xl font-bold text-gold">500+</p>
+            <p class="text-4xl lg:text-5xl font-bold text-gold">
+              <span class="counter" data-value="500" data-suffix="+">0</span>
+            </p>
             <p class="text-white/50 text-sm mt-2">Projects</p>
           </div>
         </div>
