@@ -1,50 +1,153 @@
 ---
-const navItems = [
-  { label: 'Services', href: '#services' },
-  { label: 'Our Work', href: '#portfolio' },
-  { label: 'Process', href: '#process' },
-  { label: 'About', href: '#about' },
-]
+// Header - minimal with hamburger menu (Shed-style)
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-transparent">
-  <div class="w-full px-6 md:px-12 lg:px-24">
-    <nav class="flex items-center justify-between h-24">
-      <!-- Logo -->
-      <a href="/" class="flex items-center gap-3">
-        <div class="w-12 h-12 bg-gold rounded flex items-center justify-center">
-          <span class="text-white font-bold text-xl">M</span>
-        </div>
-        <div class="hidden sm:block">
-          <span class="font-semibold text-white text-lg">McCauley Enterprise</span>
-        </div>
-      </a>
-      
-      <!-- Desktop Nav -->
-      <div class="hidden md:flex items-center gap-10">
-        {navItems.map(item => (
-          <a href={item.href} class="text-white/80 hover:text-white transition-colors font-medium">
-            {item.label}
-          </a>
-        ))}
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header">
+  <div class="w-full px-6 md:px-12 lg:px-24 py-5 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="text-white font-bold text-2xl tracking-tight z-50 relative">
+      McCauley<span class="text-gold">.</span>
+    </a>
+    
+    <!-- Menu Button -->
+    <button 
+      class="z-50 relative flex items-center gap-2 text-white font-medium tracking-wider text-sm group"
+      id="menuToggle"
+      aria-label="Toggle menu"
+    >
+      <span class="menu-text">MENU</span>
+      <div class="w-8 h-5 flex flex-col justify-between">
+        <span class="menu-line w-full h-0.5 bg-white transition-all duration-300 origin-center"></span>
+        <span class="menu-line w-full h-0.5 bg-white transition-all duration-300 origin-center"></span>
+        <span class="menu-line w-full h-0.5 bg-white transition-all duration-300 origin-center"></span>
       </div>
-      
-      <!-- CTA -->
-      <div class="flex items-center gap-6">
-        <a href="tel:8155851573" class="hidden lg:block text-white/80 hover:text-white transition-colors">
-          (815) 585-1573
-        </a>
-        <a href="#contact" class="bg-gold hover:bg-gold-dark text-white font-medium py-3 px-6 rounded transition-all hover:-translate-y-0.5">
-          Start Your Project
-        </a>
-      </div>
-      
-      <!-- Mobile Menu Button -->
-      <button class="md:hidden p-2 text-white" aria-label="Menu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </nav>
+    </button>
   </div>
 </header>
+
+<!-- Full-screen menu overlay -->
+<div class="menu-overlay fixed inset-0 z-40 bg-gold transform translate-y-full transition-transform duration-500 ease-out" id="menuOverlay">
+  <div class="w-full h-full px-6 md:px-12 lg:px-24 py-24 flex flex-col justify-between">
+    <!-- Navigation Links -->
+    <nav class="flex-1 flex flex-col justify-center">
+      <ul class="space-y-2 md:space-y-4">
+        <li>
+          <a href="#services" class="nav-link block text-[12vw] md:text-[10vw] lg:text-[8vw] font-bold text-charcoal leading-[0.95] hover:text-white transition-colors duration-300">
+            SERVICES
+          </a>
+        </li>
+        <li>
+          <a href="#portfolio" class="nav-link block text-[12vw] md:text-[10vw] lg:text-[8vw] font-bold text-charcoal leading-[0.95] hover:text-white transition-colors duration-300">
+            WORK
+          </a>
+        </li>
+        <li>
+          <a href="#about" class="nav-link block text-[12vw] md:text-[10vw] lg:text-[8vw] font-bold text-charcoal leading-[0.95] hover:text-white transition-colors duration-300">
+            ABOUT
+          </a>
+        </li>
+        <li>
+          <a href="#contact" class="nav-link block text-[12vw] md:text-[10vw] lg:text-[8vw] font-bold text-charcoal leading-[0.95] hover:text-white transition-colors duration-300">
+            CONTACT
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <!-- Bottom info -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 text-charcoal">
+      <div>
+        <p class="font-bold text-lg">McCauley Enterprise</p>
+        <p class="text-charcoal/70">New Lenox, IL • Chicagoland</p>
+      </div>
+      <div class="text-right">
+        <a href="tel:8155851573" class="text-2xl md:text-3xl font-bold hover:text-white transition-colors">(815) 585-1573</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Menu open state */
+  .menu-open .menu-overlay {
+    transform: translateY(0);
+  }
+  
+  .menu-open .menu-text {
+    opacity: 0;
+  }
+  
+  .menu-open .menu-line:nth-child(1) {
+    transform: rotate(45deg) translateY(8px);
+  }
+  
+  .menu-open .menu-line:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .menu-open .menu-line:nth-child(3) {
+    transform: rotate(-45deg) translateY(-8px);
+  }
+  
+  /* Header scrolled state */
+  .header-scrolled {
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Nav link animation */
+  .nav-link {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background: currentColor;
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('menuToggle');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const header = document.getElementById('header');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Toggle menu
+    menuToggle?.addEventListener('click', () => {
+      document.body.classList.toggle('menu-open');
+      document.body.style.overflow = document.body.classList.contains('menu-open') ? 'hidden' : '';
+    });
+    
+    // Close menu when clicking a link
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        document.body.classList.remove('menu-open');
+        document.body.style.overflow = '';
+      });
+    });
+    
+    // Header scroll state
+    function updateHeader() {
+      if (window.scrollY > 100) {
+        header?.classList.add('header-scrolled');
+      } else {
+        header?.classList.remove('header-scrolled');
+      }
+    }
+    
+    window.addEventListener('scroll', updateHeader);
+    updateHeader();
+  });
+</script>
