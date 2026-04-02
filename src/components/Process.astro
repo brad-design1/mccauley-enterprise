@@ -1,0 +1,65 @@
+---
+// Numbered process section - inspired by findrealestate + StudioX
+const steps = [
+  {
+    number: '01',
+    title: 'Consultation',
+    description: "We meet at your home, listen to your vision, and assess what is possible. No pressure — just honest conversation about your goals and budget."
+  },
+  {
+    number: '02', 
+    title: 'Design',
+    description: "We create detailed plans that bring your vision to life. You will see exactly what we will build before we swing a single hammer."
+  },
+  {
+    number: '03',
+    title: 'Build',
+    description: "Our craftsmen get to work. We keep you updated every step of the way with a dedicated project manager who answers when you call."
+  },
+  {
+    number: '04',
+    title: 'Completion',
+    description: "We walk through every detail together. We do not consider it done until you are thrilled with the result."
+  }
+]
+---
+
+<section id="process" class="section-padding bg-navy text-white">
+  <div class="container-custom">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
+      <!-- Left: Header -->
+      <div>
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+          Home Building,<br/>
+          <span class="text-gold">Rewired.</span>
+        </h2>
+        <a href="#contact" class="btn-primary mt-6">
+          Start Your Project
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+      
+      <!-- Right: Steps -->
+      <div>
+        <p class="text-white/60 text-sm font-medium mb-6 tracking-wider">OUR PROCESS</p>
+        <div class="space-y-8">
+          {steps.map(step => (
+            <div class="flex gap-6 group cursor-pointer">
+              <span class="text-gold font-bold text-lg">{step.number}</span>
+              <div class="flex-1 border-b border-white/20 pb-6">
+                <h3 class="font-semibold text-lg mb-2 group-hover:text-gold transition-colors">
+                  {step.title}
+                </h3>
+                <p class="text-white/70 leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

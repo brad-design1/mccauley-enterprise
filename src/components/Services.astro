@@ -1,0 +1,70 @@
+---
+// Services section - inspired by findrealestate Buy/Sell/Rent cards
+const services = [
+  {
+    title: 'Remodel',
+    description: "Transform your kitchen, bathroom, or living space into something extraordinary. We handle everything from design to final walkthrough.",
+    icon: '🔨'
+  },
+  {
+    title: 'Renovate', 
+    description: "Breathe new life into your entire home. Whether it is updating a vintage charmer or modernizing a dated layout, we make it happen.",
+    icon: '🏠'
+  },
+  {
+    title: 'Repair',
+    description: "From structural fixes to finishing touches, we solve problems that other contractors walk away from. No job too complex.",
+    icon: '🔧'
+  }
+]
+---
+
+<section id="services" class="section-padding bg-warm-white">
+  <div class="container-custom">
+    <!-- Header -->
+    <div class="mb-12">
+      <p class="text-gold font-medium mb-3 tracking-wider text-sm">SERVICES</p>
+      <h2 class="text-4xl md:text-5xl font-bold text-charcoal">
+        How McCauley<br/>
+        Can Help You
+      </h2>
+    </div>
+    
+    <!-- Service Cards -->
+    <div class="grid md:grid-cols-3 gap-6 mb-12">
+      {services.map(service => (
+        <div class="group bg-cream p-8 rounded-lg hover:bg-navy transition-all duration-300 cursor-pointer">
+          <span class="text-4xl mb-4 block">{service.icon}</span>
+          <h3 class="text-2xl font-bold mb-4 text-charcoal group-hover:text-white transition-colors">
+            {service.title}
+          </h3>
+          <p class="text-gray-mid group-hover:text-white/80 transition-colors leading-relaxed">
+            {service.description}
+          </p>
+          <div class="mt-6 flex items-center gap-2 text-gold font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+            Learn More
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <!-- Bottom CTA -->
+    <div class="bg-cream rounded-lg p-8 md:p-12">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <p class="text-lg md:text-xl text-gray-mid max-w-xl">
+          Our craftsmen guide you through every stage of your project with expert 
+          knowledge and reliable support.
+        </p>
+        <a href="#contact" class="btn-primary whitespace-nowrap">
+          Get Started with McCauley
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+---
+// Portfolio grid - placeholder for real project images
+const projects = [
+  { title: 'Kitchen Remodel', location: 'New Lenox, IL', placeholder: 'Modern white kitchen with island' },
+  { title: 'Master Bath', location: 'Mokena, IL', placeholder: 'Spa-like bathroom with freestanding tub' },
+  { title: 'Whole Home Renovation', location: 'Frankfort, IL', placeholder: 'Open concept living area' },
+  { title: 'Commercial Build-Out', location: 'Orland Park, IL', placeholder: 'Restaurant interior' },
+  { title: 'Basement Finish', location: 'Homer Glen, IL', placeholder: 'Entertainment space with bar' },
+  { title: 'Addition', location: 'Tinley Park, IL', placeholder: 'Family room extension' },
+]
+---
+
+<section id="portfolio" class="section-padding bg-cream">
+  <div class="container-custom">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+      <div>
+        <p class="text-gold font-medium mb-3 tracking-wider text-sm">PORTFOLIO</p>
+        <h2 class="text-4xl md:text-5xl font-bold text-charcoal">
+          Our Work
+        </h2>
+      </div>
+      <a href="/projects" class="text-charcoal font-medium hover:text-gold transition-colors flex items-center gap-2">
+        View All Projects
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+    
+    <!-- Project Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projects.map(project => (
+        <div class="group relative aspect-[4/3] bg-navy rounded-lg overflow-hidden cursor-pointer">
+          <!-- Placeholder for image -->
+          <div class="absolute inset-0 flex items-center justify-center text-white/30 text-xs p-4 text-center">
+            [IMAGE: {project.placeholder}]
+          </div>
+          
+          <!-- Hover overlay -->
+          <div class="absolute inset-0 bg-charcoal/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+            <h3 class="text-white font-semibold text-xl mb-1">{project.title}</h3>
+            <p class="text-white/70 text-sm">{project.location}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

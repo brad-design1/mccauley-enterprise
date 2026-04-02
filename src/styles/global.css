@@ -1,1 +1,84 @@
 @import "tailwindcss";
+
+@theme {
+  /* Colors - Refined McCauley palette */
+  --color-warm-white: #FAF8F5;
+  --color-cream: #F5F0E6;
+  --color-charcoal: #1A1A1A;
+  --color-navy: #1A3A4A;
+  --color-gold: #C9A227;
+  --color-gold-dark: #A68A1F;
+  --color-taupe: #B8A88A;
+  --color-gray-light: #E5E5E5;
+  --color-gray-mid: #6B7280;
+  
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* Custom component classes */
+.container-custom {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.section-padding {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+/* Button styles */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background-color: var(--color-gold);
+  color: white;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-gold-dark);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background-color: transparent;
+  color: var(--color-charcoal);
+  font-weight: 500;
+  border: 1px solid var(--color-charcoal);
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-charcoal);
+  color: white;
+}

@@ -1,0 +1,58 @@
+---
+// Testimonials section - inspired by findrealestate's "Don't Take Our Word for It"
+const testimonials = [
+  {
+    quote: "McCauley transformed our 1970s kitchen into something out of a magazine. They were professional, clean, and actually finished ahead of schedule. We've recommended them to everyone we know.",
+    name: "Sarah & Mike Thompson",
+    location: "New Lenox, IL"
+  },
+  {
+    quote: "After getting quotes from five contractors, McCauley was the only one who actually listened to what we wanted. The attention to detail was incredible. Our basement is now the favorite room in the house.",
+    name: "David Chen",
+    location: "Mokena, IL"
+  },
+  {
+    quote: "They handled our commercial build-out for Qdoba and delivered exactly what we needed on time and on budget. True professionals who understand commercial requirements.",
+    name: "Commercial Client",
+    location: "Chicagoland Area"
+  },
+]
+---
+
+<section class="section-padding bg-warm-white">
+  <div class="container-custom">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold text-charcoal">
+        Don't Take Our Word for It.
+      </h2>
+    </div>
+    
+    <!-- Testimonial Cards -->
+    <div class="grid md:grid-cols-3 gap-8">
+      {testimonials.map(testimonial => (
+        <div class="bg-cream p-8 rounded-lg">
+          <p class="text-gray-mid leading-relaxed mb-6 text-lg">
+            "{testimonial.quote}"
+          </p>
+          <div class="border-t border-gray-light pt-4">
+            <p class="font-semibold text-charcoal">{testimonial.name}</p>
+            <p class="text-sm text-gray-mid">{testimonial.location}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <!-- Trust indicators -->
+    <div class="mt-16 text-center">
+      <p class="text-gray-mid mb-6">Trusted by homeowners across Chicagoland since 1978</p>
+      <div class="flex flex-wrap justify-center gap-8 opacity-60">
+        <!-- Placeholder for trust badges/logos -->
+        <div class="text-sm text-gray-mid">[Google Reviews: 4.9 ★]</div>
+        <div class="text-sm text-gray-mid">[BBB Accredited]</div>
+        <div class="text-sm text-gray-mid">[Licensed & Insured]</div>
+        <div class="text-sm text-gray-mid">[45+ Years Experience]</div>
+      </div>
+    </div>
+  </div>
+</section>
