@@ -53,10 +53,10 @@ const projectPreviews = [
     </div>
   </div>
   
-  <!-- SHED-INSPIRED: Project preview oval (bottom left) - now controls hero bg -->
+  <!-- SHED-INSPIRED: Project preview oval (bottom left) - click to cycle -->
   <div class="absolute bottom-8 left-6 md:left-12 lg:left-24 z-20 reveal" style="transition-delay: 1s">
     <div class="project-preview-pill group cursor-pointer" id="projectPreview">
-      <div class="relative w-[180px] h-[100px] md:w-[220px] md:h-[120px] rounded-full overflow-hidden border-2 border-white/30 hover:border-gold transition-colors duration-300">
+      <div class="relative w-[180px] h-[100px] md:w-[220px] md:h-[120px] rounded-full overflow-hidden border-2 border-white/30 hover:border-gold hover:scale-105 transition-all duration-300">
         <!-- Image carousel -->
         <div class="preview-carousel absolute inset-0 flex transition-transform duration-500" id="previewCarousel">
           {projectPreviews.map((project, index) => (
@@ -67,22 +67,6 @@ const projectPreviews = [
             />
           ))}
         </div>
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-charcoal/40 group-hover:bg-charcoal/20 transition-colors flex items-center justify-center">
-          <div class="text-center">
-            <p class="text-white text-xs font-medium tracking-wider uppercase">View Projects</p>
-            <p class="text-gold text-lg font-bold"><span id="previewCount">01</span>/04</p>
-          </div>
-        </div>
-      </div>
-      <!-- Nav dots -->
-      <div class="flex justify-center gap-2 mt-3">
-        {projectPreviews.map((_, index) => (
-          <button 
-            class={`preview-dot w-2 h-2 rounded-full transition-all ${index === 0 ? 'bg-gold w-4' : 'bg-white/40'}`}
-            data-index={index}
-          ></button>
-        ))}
       </div>
     </div>
   </div>
@@ -132,11 +116,9 @@ const projectPreviews = [
 </style>
 
 <script>
-  // Project preview carousel + hero background swap
+  // Click oval to cycle through projects + swap hero background
   document.addEventListener('DOMContentLoaded', () => {
     const carousel = document.getElementById('previewCarousel');
-    const countEl = document.getElementById('previewCount');
-    const dots = document.querySelectorAll('.preview-dot');
     const heroBgs = document.querySelectorAll('.hero-bg');
     let currentIndex = 0;
     const total = 4;
@@ -147,7 +129,6 @@ const projectPreviews = [
       
       // Update preview carousel
       carousel!.style.transform = `translateX(-${index * 100}%)`;
-      countEl!.textContent = String(index + 1).padStart(2, '0');
       
       // Update hero background with crossfade
       heroBgs.forEach((bg, i) => {
@@ -159,23 +140,14 @@ const projectPreviews = [
           bg.classList.add('opacity-0');
         }
       });
-      
-      // Update dots
-      dots.forEach((dot, i) => {
-        if (i === index) {
-          dot.classList.add('bg-gold', 'w-4');
-          dot.classList.remove('bg-white/40');
-        } else {
-          dot.classList.remove('bg-gold', 'w-4');
-          dot.classList.add('bg-white/40');
-        }
-      });
+    }
+    
+    function nextSlide() {
+      updateCarousel((currentIndex + 1) % total);
     }
     
     function startAutoRotate() {
-      autoRotateInterval = setInterval(() => {
-        updateCarousel((currentIndex + 1) % total);
-      }, 4000);
+      autoRotateInterval = setInterval(nextSlide, 4000);
     }
     
     function stopAutoRotate() {
@@ -189,19 +161,9 @@ const projectPreviews = [
     document.getElementById('projectPreview')?.addEventListener('mouseenter', stopAutoRotate);
     document.getElementById('projectPreview')?.addEventListener('mouseleave', startAutoRotate);
     
-    // Click dots to navigate
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', (e) => {
-        e.stopPropagation();
-        updateCarousel(index);
-      });
-    });
-    
-    // Click pill to go to portfolio (but not when clicking dots)
-    document.getElementById('projectPreview')?.addEventListener('click', (e) => {
-      if (!(e.target as Element).closest('.preview-dot')) {
-        document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
-      }
+    // Click oval to go to next image
+    document.getElementById('projectPreview')?.addEventListener('click', () => {
+      nextSlide();
     });
   });
 </script>
