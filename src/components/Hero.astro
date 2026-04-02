@@ -1,5 +1,11 @@
 ---
-// Hero section - full bleed with animations
+// Hero section - full bleed with Shed-inspired touches
+const projectPreviews = [
+  '/images/portfolio-1.png',
+  '/images/portfolio-2.png',
+  '/images/portfolio-3.png',
+  '/images/portfolio-4.png',
+]
 ---
 
 <section class="relative min-h-screen flex items-center overflow-hidden">
@@ -40,13 +46,124 @@
     </div>
   </div>
   
-  <!-- Scroll indicator -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 reveal" style="transition-delay: 1s">
-    <div class="flex flex-col items-center text-white/60">
-      <span class="text-sm mb-2">Scroll</span>
-      <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-      </svg>
+  <!-- SHED-INSPIRED: Project preview oval (bottom left) -->
+  <div class="absolute bottom-8 left-6 md:left-12 lg:left-24 z-20 reveal" style="transition-delay: 1s">
+    <div class="project-preview-pill group cursor-pointer" id="projectPreview">
+      <div class="relative w-[180px] h-[100px] md:w-[220px] md:h-[120px] rounded-full overflow-hidden border-2 border-white/30 hover:border-gold transition-colors duration-300">
+        <!-- Image carousel -->
+        <div class="preview-carousel absolute inset-0 flex transition-transform duration-500" id="previewCarousel">
+          {projectPreviews.map((img, index) => (
+            <img 
+              src={img} 
+              alt={`Project ${index + 1}`}
+              class="w-full h-full object-cover flex-shrink-0"
+            />
+          ))}
+        </div>
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-charcoal/40 group-hover:bg-charcoal/20 transition-colors flex items-center justify-center">
+          <div class="text-center">
+            <p class="text-white text-xs font-medium tracking-wider uppercase">View Projects</p>
+            <p class="text-gold text-lg font-bold"><span id="previewCount">01</span>/04</p>
+          </div>
+        </div>
+      </div>
+      <!-- Nav dots -->
+      <div class="flex justify-center gap-2 mt-3">
+        {projectPreviews.map((_, index) => (
+          <button 
+            class={`preview-dot w-2 h-2 rounded-full transition-all ${index === 0 ? 'bg-gold w-4' : 'bg-white/40'}`}
+            data-index={index}
+          ></button>
+        ))}
+      </div>
     </div>
   </div>
+  
+  <!-- SHED-INSPIRED: Scroll circle (bottom right) -->
+  <div class="absolute bottom-8 right-6 md:right-12 lg:right-24 z-20 reveal" style="transition-delay: 1.2s">
+    <a href="#services" class="scroll-circle group flex flex-col items-center cursor-pointer">
+      <div class="relative w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white/50 group-hover:border-gold transition-all duration-300 flex items-center justify-center group-hover:scale-110">
+        <!-- Rotating text -->
+        <svg class="absolute inset-0 w-full h-full animate-spin-slow" viewBox="0 0 100 100">
+          <defs>
+            <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/>
+          </defs>
+          <text class="fill-white/70 text-[11px] tracking-[0.3em] uppercase">
+            <textPath href="#circlePath">
+              scroll • explore • discover • 
+            </textPath>
+          </text>
+        </svg>
+        <!-- Arrow -->
+        <svg class="w-5 h-5 text-white group-hover:text-gold transition-colors animate-bounce-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
+    </a>
+  </div>
 </section>
+
+<style>
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 15s linear infinite;
+  }
+  
+  .animate-bounce-slow {
+    animation: bounce-slow 2s ease-in-out infinite;
+  }
+</style>
+
+<script>
+  // Project preview carousel auto-rotation
+  document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.getElementById('previewCarousel');
+    const countEl = document.getElementById('previewCount');
+    const dots = document.querySelectorAll('.preview-dot');
+    let currentIndex = 0;
+    const total = 4;
+    
+    function updateCarousel(index) {
+      currentIndex = index;
+      carousel.style.transform = `translateX(-${index * 100}%)`;
+      countEl.textContent = String(index + 1).padStart(2, '0');
+      
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.add('bg-gold', 'w-4');
+          dot.classList.remove('bg-white/40');
+        } else {
+          dot.classList.remove('bg-gold', 'w-4');
+          dot.classList.add('bg-white/40');
+        }
+      });
+    }
+    
+    // Auto-rotate every 3 seconds
+    setInterval(() => {
+      updateCarousel((currentIndex + 1) % total);
+    }, 3000);
+    
+    // Click dots to navigate
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => updateCarousel(index));
+    });
+    
+    // Click pill to go to portfolio
+    document.getElementById('projectPreview')?.addEventListener('click', (e) => {
+      if (!(e.target as Element).closest('.preview-dot')) {
+        document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
