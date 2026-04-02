@@ -9,13 +9,15 @@
       <div class="flex items-center gap-2 md:gap-4 overflow-hidden">
         <span class="text-[14vw] md:text-[12vw] lg:text-[10vw] font-bold leading-none tracking-tight">SEE</span>
         <span class="text-[14vw] md:text-[12vw] lg:text-[10vw] font-bold leading-none tracking-tight">WORK</span>
-        <!-- Embedded image in text -->
-        <div class="hidden md:block w-[15vw] h-[8vw] rounded-lg overflow-hidden">
-          <img 
-            src="/images/portfolio-1.png" 
-            alt="Our work" 
-            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          />
+        <!-- Embedded image in text - cascading on hover -->
+        <div class="hidden md:block w-[15vw] h-[8vw] rounded-lg overflow-hidden relative" id="footerImageContainer">
+          <div class="footer-image-slot absolute inset-0" id="footerImageSlot">
+            <img src="/images/portfolio-1.png" alt="Project 1" class="absolute inset-0 w-full h-full object-cover" />
+            <img src="/images/portfolio-2.png" alt="Project 2" class="absolute inset-0 w-full h-full object-cover" style="transform: translateY(-100%)" />
+            <img src="/images/portfolio-3.png" alt="Project 3" class="absolute inset-0 w-full h-full object-cover" style="transform: translateY(-100%)" />
+            <img src="/images/portfolio-4.png" alt="Project 4" class="absolute inset-0 w-full h-full object-cover" style="transform: translateY(-100%)" />
+            <img src="/images/portfolio-5.png" alt="Project 5" class="absolute inset-0 w-full h-full object-cover" style="transform: translateY(-100%)" />
+          </div>
         </div>
       </div>
       
@@ -50,3 +52,78 @@
     </div>
   </div>
 </footer>
+
+<script>
+  const container = document.getElementById('footerImageContainer');
+  const slot = document.getElementById('footerImageSlot');
+  const images = slot?.querySelectorAll('img');
+  
+  let isHovering = false;
+  let currentIndex = 0;
+  let intervalId: ReturnType<typeof setInterval> | null = null;
+  let currentDelay = 600; // Start slower
+  const minDelay = 100; // Fastest speed
+  const acceleration = 0.85; // Speed multiplier each cycle
+  
+  function dropNextImage() {
+    if (!images || !isHovering) return;
+    
+    const currentImg = images[currentIndex];
+    const nextIndex = (currentIndex + 1) % images.length;
+    const nextImg = images[nextIndex];
+    
+    // Current image falls down and out
+    currentImg.style.transition = `transform ${currentDelay}ms cubic-bezier(0.4, 0, 1, 1)`;
+    currentImg.style.transform = 'translateY(100%)';
+    
+    // Next image falls in from top
+    nextImg.style.transition = 'none';
+    nextImg.style.transform = 'translateY(-100%)';
+    
+    // Force reflow
+    nextImg.offsetHeight;
+    
+    nextImg.style.transition = `transform ${currentDelay}ms cubic-bezier(0.4, 0, 1, 1)`;
+    nextImg.style.transform = 'translateY(0)';
+    
+    currentIndex = nextIndex;
+    
+    // Accelerate
+    currentDelay = Math.max(minDelay, currentDelay * acceleration);
+    
+    // Schedule next drop
+    if (isHovering) {
+      intervalId = setTimeout(dropNextImage, currentDelay);
+    }
+  }
+  
+  function resetImages() {
+    if (!images) return;
+    
+    images.forEach((img, i) => {
+      img.style.transition = 'transform 0.3s ease-out';
+      if (i === 0) {
+        img.style.transform = 'translateY(0)';
+      } else {
+        img.style.transform = 'translateY(-100%)';
+      }
+    });
+    
+    currentIndex = 0;
+    currentDelay = 600;
+  }
+  
+  container?.addEventListener('mouseenter', () => {
+    isHovering = true;
+    dropNextImage();
+  });
+  
+  container?.addEventListener('mouseleave', () => {
+    isHovering = false;
+    if (intervalId) {
+      clearTimeout(intervalId);
+      intervalId = null;
+    }
+    resetImages();
+  });
+</script>
