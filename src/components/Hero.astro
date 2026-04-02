@@ -1,5 +1,5 @@
 ---
-// Hero section - Shed-style: bright images, subtle motion, clean layout
+// Hero section - Shed-style with better spacing
 const projectPreviews = [
   { thumb: '/images/portfolio-1.png', hero: '/images/accent-architecture.png' },
   { thumb: '/images/portfolio-2.png', hero: '/images/portfolio-5.png' },
@@ -9,19 +9,19 @@ const projectPreviews = [
 ---
 
 <section class="relative min-h-screen flex items-center overflow-hidden">
-  <!-- Marquee strip at top -->
-  <div class="absolute top-0 left-0 right-0 z-30 bg-charcoal/30 backdrop-blur-sm py-3 overflow-hidden">
+  <!-- Marquee strip - BELOW header, hidden on mobile -->
+  <div class="hidden md:block absolute top-[72px] left-0 right-0 z-20 bg-charcoal/40 backdrop-blur-sm py-2 overflow-hidden">
     <div class="marquee-track flex whitespace-nowrap">
-      <span class="marquee-content text-white/70 text-sm tracking-wider">
+      <span class="marquee-content text-white/80 text-xs tracking-widest uppercase">
         REMODEL • RENOVATE • REPAIR • THIRD GENERATION CRAFTSMEN • SERVING CHICAGOLAND SINCE 1978 • REMODEL • RENOVATE • REPAIR • THIRD GENERATION CRAFTSMEN • SERVING CHICAGOLAND SINCE 1978 • 
       </span>
-      <span class="marquee-content text-white/70 text-sm tracking-wider">
+      <span class="marquee-content text-white/80 text-xs tracking-widest uppercase">
         REMODEL • RENOVATE • REPAIR • THIRD GENERATION CRAFTSMEN • SERVING CHICAGOLAND SINCE 1978 • REMODEL • RENOVATE • REPAIR • THIRD GENERATION CRAFTSMEN • SERVING CHICAGOLAND SINCE 1978 • 
       </span>
     </div>
   </div>
 
-  <!-- Background Images - BRIGHTER with ken burns zoom -->
+  <!-- Background Images -->
   <div class="absolute inset-0 z-0">
     {projectPreviews.map((project, index) => (
       <div 
@@ -35,14 +35,13 @@ const projectPreviews = [
         />
       </div>
     ))}
-    <!-- LIGHTER overlay - lets more image through -->
     <div class="absolute inset-0 bg-gradient-to-r from-charcoal/60 via-charcoal/30 to-transparent z-10"></div>
   </div>
   
-  <!-- Content - large bold headline -->
-  <div class="relative z-20 w-full px-6 md:px-12 lg:px-24">
+  <!-- Content - positioned higher with more bottom margin -->
+  <div class="relative z-20 w-full px-6 md:px-12 lg:px-24 pb-40 md:pb-48">
     <div class="max-w-full">
-      <h1 class="text-[15vw] md:text-[12vw] lg:text-[10vw] font-bold text-white leading-[0.85] tracking-tight">
+      <h1 class="text-[13vw] md:text-[10vw] lg:text-[8vw] font-bold text-white leading-[0.85] tracking-tight">
         <span class="block reveal-up" style="transition-delay: 0.1s">BUILD</span>
         <span class="block reveal-up" style="transition-delay: 0.2s">WHAT</span>
         <span class="block text-gold reveal-up" style="transition-delay: 0.3s">MATTERS</span>
@@ -50,10 +49,10 @@ const projectPreviews = [
     </div>
   </div>
   
-  <!-- Project preview oval (bottom left) -->
-  <div class="absolute bottom-8 left-6 md:left-12 lg:left-24 z-20 reveal" style="transition-delay: 1s">
+  <!-- Project preview oval (bottom left) - more bottom spacing on mobile -->
+  <div class="absolute bottom-6 md:bottom-10 left-6 md:left-12 lg:left-24 z-20 reveal" style="transition-delay: 1s">
     <div class="project-preview-pill group cursor-pointer" id="projectPreview">
-      <div class="relative w-[140px] h-[80px] md:w-[200px] md:h-[110px] rounded-full overflow-hidden border-2 border-white/40 hover:border-gold hover:scale-105 transition-all duration-300 shadow-2xl">
+      <div class="relative w-[120px] h-[70px] md:w-[180px] md:h-[100px] rounded-full overflow-hidden border-2 border-white/40 hover:border-gold hover:scale-105 transition-all duration-300 shadow-2xl">
         <div class="preview-carousel absolute inset-0 flex transition-transform duration-500" id="previewCarousel">
           {projectPreviews.map((project, index) => (
             <img 
@@ -67,18 +66,17 @@ const projectPreviews = [
     </div>
   </div>
   
-  <!-- Scroll button (bottom right) - simplified like Shed -->
-  <div class="absolute bottom-8 right-6 md:right-12 lg:right-24 z-20 reveal" style="transition-delay: 1.2s">
+  <!-- Scroll button (bottom right) -->
+  <div class="absolute bottom-6 md:bottom-10 right-6 md:right-12 lg:right-24 z-20 reveal" style="transition-delay: 1.2s">
     <a href="#services" class="group cursor-pointer">
-      <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-gold transition-all duration-300">
-        <span class="text-charcoal text-xs font-bold tracking-wider group-hover:text-white transition-colors">SCROLL</span>
+      <div class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-gold transition-all duration-300">
+        <span class="text-charcoal text-[10px] md:text-xs font-bold tracking-wider group-hover:text-white transition-colors">SCROLL</span>
       </div>
     </a>
   </div>
 </section>
 
 <style>
-  /* Marquee animation */
   .marquee-track {
     animation: marquee 30s linear infinite;
   }
@@ -92,7 +90,6 @@ const projectPreviews = [
     100% { transform: translateX(-50%); }
   }
   
-  /* Ken Burns zoom effect on hero images */
   .hero-zoom {
     animation: kenburns 20s ease-out infinite alternate;
   }
@@ -106,7 +103,6 @@ const projectPreviews = [
     }
   }
   
-  /* Reset animation when switching images */
   .hero-bg.opacity-0 .hero-zoom {
     animation: none;
   }
