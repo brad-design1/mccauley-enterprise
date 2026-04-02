@@ -1,20 +1,20 @@
 ---
-// Services section - FULL WIDTH cards
+// Services section - FULL WIDTH cards with real images
 const services = [
   {
     title: 'Remodel',
     description: "Transform your kitchen, bathroom, or living space into something extraordinary. We handle everything from design to final walkthrough.",
-    icon: '🔨'
+    image: '/images/service-remodel.png'
   },
   {
     title: 'Renovate', 
     description: "Breathe new life into your entire home. Whether it is updating a vintage charmer or modernizing a dated layout, we make it happen.",
-    icon: '🏠'
+    image: '/images/service-renovate.png'
   },
   {
     title: 'Repair',
     description: "From structural fixes to finishing touches, we solve problems that other contractors walk away from. No job too complex.",
-    icon: '🔧'
+    image: '/images/service-repair.png'
   }
 ]
 ---
@@ -30,22 +30,33 @@ const services = [
       </h2>
     </div>
     
-    <!-- Service Cards - FULL WIDTH GRID -->
+    <!-- Service Cards - FULL WIDTH GRID with images -->
     <div class="grid md:grid-cols-3 gap-6 lg:gap-8 mb-16">
       {services.map(service => (
-        <div class="group bg-cream p-10 lg:p-12 rounded-lg hover:bg-navy transition-all duration-300 cursor-pointer min-h-[320px] flex flex-col">
-          <span class="text-5xl mb-6 block">{service.icon}</span>
-          <h3 class="text-3xl font-bold mb-4 text-charcoal group-hover:text-white transition-colors">
-            {service.title}
-          </h3>
-          <p class="text-gray-mid group-hover:text-white/80 transition-colors leading-relaxed text-lg flex-1">
-            {service.description}
-          </p>
-          <div class="mt-8 flex items-center gap-2 text-gold font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-            Learn More
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
+        <div class="group relative overflow-hidden rounded-lg cursor-pointer min-h-[450px]">
+          <!-- Background Image -->
+          <img 
+            src={service.image} 
+            alt={service.title}
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+          <!-- Overlay -->
+          <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-transparent"></div>
+          
+          <!-- Content -->
+          <div class="absolute inset-0 flex flex-col justify-end p-8 lg:p-10">
+            <h3 class="text-3xl font-bold mb-4 text-white">
+              {service.title}
+            </h3>
+            <p class="text-white/80 leading-relaxed text-lg">
+              {service.description}
+            </p>
+            <div class="mt-6 flex items-center gap-2 text-gold font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+              Learn More
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
           </div>
         </div>
       ))}

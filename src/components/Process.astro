@@ -1,33 +1,37 @@
 ---
-// Numbered process section - FULL WIDTH layout
+// Numbered process section with images
 const steps = [
   {
     number: '01',
     title: 'Consultation',
-    description: "We meet at your home, listen to your vision, and assess what is possible. No pressure — just honest conversation about your goals and budget."
+    description: "We meet at your home, listen to your vision, and assess what is possible. No pressure — just honest conversation about your goals and budget.",
+    image: '/images/process-consult.png'
   },
   {
     number: '02', 
     title: 'Design',
-    description: "We create detailed plans that bring your vision to life. You will see exactly what we will build before we swing a single hammer."
+    description: "We create detailed plans that bring your vision to life. You will see exactly what we will build before we swing a single hammer.",
+    image: '/images/process-design.png'
   },
   {
     number: '03',
     title: 'Build',
-    description: "Our craftsmen get to work. We keep you updated every step of the way with a dedicated project manager who answers when you call."
+    description: "Our craftsmen get to work. We keep you updated every step of the way with a dedicated project manager who answers when you call.",
+    image: '/images/process-build.png'
   },
   {
     number: '04',
     title: 'Completion',
-    description: "We walk through every detail together. We do not consider it done until you are thrilled with the result."
+    description: "We walk through every detail together. We do not consider it done until you are thrilled with the result.",
+    image: '/images/process-complete.png'
   }
 ]
 ---
 
-<section id="process" class="py-24 md:py-32 bg-navy text-white">
-  <div class="w-full px-6 md:px-12 lg:px-24">
-    <div class="grid lg:grid-cols-2 gap-16 lg:gap-24">
-      <!-- Left: Header -->
+<section id="process" class="bg-navy text-white">
+  <!-- Header -->
+  <div class="py-24 md:py-32 w-full px-6 md:px-12 lg:px-24">
+    <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
       <div>
         <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-8">
           Home Building,<br/>
@@ -44,24 +48,42 @@ const steps = [
         </a>
       </div>
       
-      <!-- Right: Steps -->
-      <div>
-        <p class="text-white/50 text-sm font-medium mb-8 tracking-widest uppercase">Our Process</p>
-        <div class="space-y-10">
-          {steps.map(step => (
-            <div class="flex gap-8 group cursor-pointer">
-              <span class="text-gold font-bold text-2xl">{step.number}</span>
-              <div class="flex-1 border-b border-white/20 pb-8">
-                <h3 class="font-bold text-2xl mb-3 group-hover:text-gold transition-colors">
-                  {step.title}
-                </h3>
-                <p class="text-white/60 leading-relaxed text-lg">
-                  {step.description}
-                </p>
+      <!-- Featured process image -->
+      <div class="relative">
+        <img 
+          src="/images/accent-craft.png" 
+          alt="McCauley craftsmanship" 
+          class="w-full rounded-lg"
+        />
+      </div>
+    </div>
+  </div>
+  
+  <!-- Process Steps -->
+  <div class="bg-charcoal py-20">
+    <div class="w-full px-6 md:px-12 lg:px-24">
+      <p class="text-white/50 text-sm font-medium mb-12 tracking-widest uppercase">Our Process</p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {steps.map(step => (
+          <div class="group">
+            <div class="relative aspect-[4/3] mb-6 overflow-hidden rounded-lg">
+              <img 
+                src={step.image} 
+                alt={step.title}
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div class="absolute top-4 left-4 bg-gold text-white font-bold px-3 py-1 rounded text-sm">
+                {step.number}
               </div>
             </div>
-          ))}
-        </div>
+            <h3 class="font-bold text-xl mb-3 text-white group-hover:text-gold transition-colors">
+              {step.title}
+            </h3>
+            <p class="text-white/60 leading-relaxed">
+              {step.description}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   </div>

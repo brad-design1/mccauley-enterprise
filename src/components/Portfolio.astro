@@ -1,12 +1,12 @@
 ---
-// Portfolio grid - FULL BLEED edge to edge
+// Portfolio grid - FULL BLEED with real images
 const projects = [
-  { title: 'Kitchen Remodel', location: 'New Lenox, IL', placeholder: 'Modern white kitchen with island' },
-  { title: 'Master Bath', location: 'Mokena, IL', placeholder: 'Spa-like bathroom with freestanding tub' },
-  { title: 'Whole Home Renovation', location: 'Frankfort, IL', placeholder: 'Open concept living area' },
-  { title: 'Commercial Build-Out', location: 'Orland Park, IL', placeholder: 'Restaurant interior' },
-  { title: 'Basement Finish', location: 'Homer Glen, IL', placeholder: 'Entertainment space with bar' },
-  { title: 'Addition', location: 'Tinley Park, IL', placeholder: 'Family room extension' },
+  { title: 'Master Bath Renovation', location: 'New Lenox, IL', image: '/images/portfolio-1.png' },
+  { title: 'Restaurant Build-Out', location: 'Orland Park, IL', image: '/images/portfolio-2.png' },
+  { title: 'Executive Office Suite', location: 'Mokena, IL', image: '/images/portfolio-3.png' },
+  { title: 'Modern Retail Storefront', location: 'Frankfort, IL', image: '/images/portfolio-4.png' },
+  { title: 'Basement Entertainment', location: 'Homer Glen, IL', image: '/images/portfolio-5.png' },
+  { title: 'Historic Restoration', location: 'Tinley Park, IL', image: '/images/portfolio-6.png' },
 ]
 ---
 
@@ -33,11 +33,13 @@ const projects = [
   <div class="w-full px-6 md:px-12 lg:px-24">
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
       {projects.map(project => (
-        <div class="group relative aspect-[4/3] bg-navy overflow-hidden cursor-pointer">
-          <!-- Placeholder for image -->
-          <div class="absolute inset-0 flex items-center justify-center text-white/30 text-xs p-4 text-center bg-gradient-to-br from-navy to-charcoal">
-            [IMAGE: {project.placeholder}]
-          </div>
+        <div class="group relative aspect-[4/3] overflow-hidden cursor-pointer">
+          <!-- Image -->
+          <img 
+            src={project.image} 
+            alt={project.title}
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
           
           <!-- Hover overlay -->
           <div class="absolute inset-0 bg-gold/90 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-8">
